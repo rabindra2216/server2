@@ -145,7 +145,7 @@ app.get("/totalPurchase/shop/:id", function (req, res, next)
 {
     let id =req.params.id;
     let values=[id];
-const query = `SELECT productid,COUNT(purchaseId) AS totalPurchase FROM purchases WHERE shopId=$1 GROUP BY productid`;
+const query = `SELECT productid,SUM(quantity) AS totalPurchase FROM purchases WHERE shopId=$1 GROUP BY productid`;
 client.query(query,values, function (err, result)
 { if (err) 
 { res.status(400).send(err);}
@@ -156,7 +156,7 @@ app.get("/totalPurchase/product/:id", function (req, res, next)
 {
     let id =req.params.id;
     let values=[id];
-const query = `SELECT shopId,COUNT(purchaseId) AS totalPurchase FROM purchases WHERE productid=$1 GROUP BY shopId`;
+const query = `SELECT shopId,SUM(quantity) AS totalPurchase FROM purchases WHERE productid=$1 GROUP BY shopId`;
 client.query(query,values, function (err, result)
 { if (err) 
 { res.status(400).send(err);}
